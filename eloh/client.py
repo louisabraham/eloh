@@ -10,7 +10,11 @@ from tqdm.autonotebook import tqdm
 
 def connect(hostname: str, port: int, rdv: bytes):
     server_conn = socket.create_connection((hostname, port))
+    # server_conn = socket.socket()
+    # server_conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    # server_conn.bind(("0.0.0.0", 0))
     out_port = server_conn.getsockname()[1]
+    # server_conn.connect((hostname, port))
 
     server_conn.send(rdv)
     resp = server_conn.recv(8)
@@ -109,4 +113,3 @@ def recv_cli():
         )
 
     recv(args.hostname, args.port, args.rdv)
-
